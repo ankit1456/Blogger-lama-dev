@@ -36,13 +36,13 @@ export default function Settings() {
       updatedUser["profilePic"] = filename;
 
       try {
-        await axios.post("/upload", data);
+        await axios.post("/api/v1/upload", data);
       } catch (err) {
         console.log(err);
       }
     }
     try {
-      const res = await axios.put("/users/" + user._id, updatedUser);
+      const res = await axios.put("/api/v1/users/" + user._id, updatedUser);
       console.log(res.data.updatedUser);
       setSuccess(true);
       dispatch({ type: "UPDATE_SUCCESS", payload: res.data.updatedUser });

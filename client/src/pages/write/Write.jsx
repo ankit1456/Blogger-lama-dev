@@ -24,11 +24,11 @@ export default function Write() {
       data.append("file", file);
       newPost.photo = filename;
       try {
-        await axios.post("/upload", data);
+        await axios.post("/api/v1/upload", data);
       } catch (err) {}
     }
     try {
-      const res = await axios.post("/posts", newPost);
+      const res = await axios.post("/api/v1/posts", newPost);
       console.log(res);
       window.location.replace("/post/" + res.data.newPost._id);
     } catch (err) {}

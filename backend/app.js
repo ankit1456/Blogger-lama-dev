@@ -29,6 +29,15 @@ const upload = multer({ storage });
 app.post("/api/v1/upload", upload.single("file"), (req, res) => {
   res.status(200).json("File has been uploaded");
 });
+
+// if (process.env.NODE_ENV === "production") {
+app.use(express.static(path.join(__dirname, "../client/build")));
+
+app.get("*", (req, res) => {
+  res.sendFile(path.resolve(__dirname, "../client/build/index.html"));
+});
+// }
+
 app.use("/api/v1/auth", authRoute);
 app.use("/api/v1/users", userRoute);
 app.use("/api/v1/posts", postRoute);
