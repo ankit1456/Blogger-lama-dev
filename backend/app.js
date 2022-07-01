@@ -34,14 +34,14 @@ app.use("/api/v1/category", categoryRoute);
 app.post("/api/v1/upload", upload.single("file"), (req, res) => {
   res.status(200).json("File has been uploaded");
 });
-// if (process.env.NODE_ENV === "production") {
+if (process.env.NODE_ENV === "production") {
   const __dirname1 = path.resolve();
   app.use(express.static(path.join(__dirname1, "/client/build")));
 
   app.get("*", (req, res) => {
     res.sendFile(path.resolve(__dirname1, "client", "build", "index.html"));
   });
-// }
+}
 
 
 module.exports = app;
