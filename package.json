@@ -4,9 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon --watch backend --exec node --experimental-modules backend/server.js --ignore ./frontend",
+    "dev": "nodemon --watch backend --exec node --experimental-modules backend/server.js --ignore ./client",
     "start": "node backend/server.js",
-    "heroku:postbuild":"NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run client --prefix client"
+    "heroku-postbuild" : "NPM_CONFIG_PRODUCTION=false && npm install --prefix client && npm run build --prefix client"
   },
   "keywords": [],
   "author": "ankit tripathi",
