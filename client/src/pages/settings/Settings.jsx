@@ -5,14 +5,15 @@ import { Context } from "../../context/Context";
 import axios from "axios";
 
 export default function Settings() {
+  const { user, dispatch } = useContext(Context);
+
   const [file, setFile] = useState(null);
-  const [username, setUsername] = useState("");
-  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState(user.username);
+  const [email, setEmail] = useState(user.email);
   const [password, setPassword] = useState("");
   const [success, setSuccess] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  const { user, dispatch } = useContext(Context);
 
   const PF = "http://localhost:4000/images/";
 
@@ -25,12 +26,11 @@ export default function Settings() {
       userId: user._id,
       username,
       email,
-      password,
+      password:password?password:user.password,
     };
     if (file) {
       const data = new FormData();
       const filename = Date.now() + file.name;
-      console.log(filename);
       data.append("name", filename);
       data.append("file", file);
       updatedUser["profilePic"] = filename;
@@ -43,11 +43,11 @@ export default function Settings() {
     }
     try {
       const res = await axios.put("/api/v1/users/" + user._id, updatedUser);
-      console.log(res.data.updatedUser);
+      
       setSuccess(true);
       dispatch({ type: "UPDATE_SUCCESS", payload: res.data.updatedUser });
     } catch (err) {
-      console.log("res");
+     
       dispatch({ type: "UPDATE_FAILURE" });
     }
     setLoading(false);
@@ -88,18 +88,19 @@ export default function Settings() {
           <label>Username</label>
           <input
             type="text"
-            placeholder={user.username}
+            value={username}      
             onChange={(e) => setUsername(e.target.value)}
           />
           <label>Email</label>
           <input
             type="email"
-            placeholder={user.email}
+            value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
           <label>Password</label>
           <input
             type="password"
+            value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
           <button className="settingsSubmit" type="submit">

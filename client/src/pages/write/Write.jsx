@@ -10,12 +10,14 @@ export default function Write() {
   const { user } = useContext(Context);
 
   const handleSubmit = async (e) => {
+  
     e.preventDefault();
     const newPost = {
       username: user.username,
       title,
       description: desc,
     };
+
 
     if (file) {
       const data = new FormData();
@@ -29,7 +31,7 @@ export default function Write() {
     }
     try {
       const res = await axios.post("/api/v1/posts", newPost);
-      console.log(res);
+      
       window.location.replace("/post/" + res.data.newPost._id);
     } catch (err) {}
   };
